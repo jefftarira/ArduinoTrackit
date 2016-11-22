@@ -10,8 +10,10 @@ import java.net.URLConnection;
 import java.net.URLEncoder;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.json.simple.JSONArray;
 
 public class Expreso extends javax.swing.JFrame {
 
@@ -27,7 +29,9 @@ public class Expreso extends javax.swing.JFrame {
         jTable1 = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Expreso");
+        setResizable(false);
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -103,7 +107,7 @@ public class Expreso extends javax.swing.JFrame {
         });
     }
 
-    public void mostrarAlumnos() throws MalformedURLException, IOException, JSONException {
+    public void mostrarAlumnos(String puerto) throws MalformedURLException, IOException, JSONException {
         System.out.println("Pidiendo datos");
         String respuesta = "";
 
@@ -111,7 +115,7 @@ public class Expreso extends javax.swing.JFrame {
         jsonD.put("expreso", 60);
 
         String userAgent = "Mozilla/5.0 (X11; Linux x86_64; rv:26.0) Gecko/20100101 Firefox/26.0";
-        String address = "http://localhost/trackit/service_jsp/listaAlumnosExpreso.jsp";
+        String address = "http://localhost:8084/trackit/service_jsp/listaAlumnosExpreso.jsp";
         String charset = "UTF-8";
 
         String stringToSend = URLEncoder.encode(jsonD.toString(), charset);
@@ -119,21 +123,40 @@ public class Expreso extends javax.swing.JFrame {
         URLConnection connection = URL.openConnection();
         connection.addRequestProperty("User-Agent", userAgent);
         connection.setDoOutput(true);
-//        OutputStreamWriter out = new OutputStreamWriter(
-//                connection.getOutputStream());
-//        out.write(jsonD.toString());
-//        System.out.println("Se envio datos");
-//        out.close();
+        OutputStreamWriter out = new OutputStreamWriter(
+                connection.getOutputStream());
+        out.write(jsonD.toString());
+        System.out.println("Se envio datos");
+        out.close();
         BufferedReader in = new BufferedReader(
                 new InputStreamReader(
                         connection.getInputStream()));
         String response;
         while ((response = in.readLine()) != null) {
-            respuesta += response;            
+            respuesta += response;
         }
         in.close();
-        System.out.println(respuesta);
 
+        DefaultTableModel modelo = new DefaultTableModel();
+        jTable1.setModel(modelo);
+        modelo.addColumn("ID");
+        modelo.addColumn("Nombre");
+        modelo.addColumn("Direccion");
+        modelo.addColumn("Estado");
+
+        JSONObject jObj = new JSONObject(respuesta);
+        org.json.JSONArray array = jObj.getJSONArray("alumnos");
+        for (int i = 0; i < array.length(); i++) {
+            JSONObject alu = array.getJSONObject(i);
+            Object[] obj = new Object[4];
+            obj[0] = alu.getString("id");
+            obj[1] = alu.getString("nombres") + " " + alu.getString("apellidos");
+            obj[2] = alu.getString("direccion");
+            modelo.addRow(obj);
+        }
+
+        ArduinoThread ard = new ArduinoThread(puerto, "Expreso");
+        ard.start();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

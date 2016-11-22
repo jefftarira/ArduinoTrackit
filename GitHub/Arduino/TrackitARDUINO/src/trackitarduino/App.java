@@ -33,6 +33,7 @@ public class App extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Control de Arduino");
+        setResizable(false);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         jLabel1.setText("Casa");
@@ -140,26 +141,28 @@ public class App extends javax.swing.JFrame {
     }//GEN-LAST:event_btIni1ActionPerformed
 
     private void btIni2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btIni2ActionPerformed
-//        String puerto = cbPuerto2.getSelectedItem().toString().trim();
-//
-//        if (!puerto.isEmpty()) {
-//            ArduinoThread ard = new ArduinoThread(puerto, "Expreso");
-//            ard.start();
-//            lbMensaje2.setText("Iniciado");
-//            lbMensaje2.setForeground(Color.BLUE);
-//        } else {
-//            lbMensaje2.setText("Seleccione un puerto");
-//            lbMensaje2.setForeground(Color.RED);
-//        }
-          Expreso exp = new Expreso();
-          exp.setVisible(true);
-        try {
-            exp.mostrarAlumnos();
-        } catch (IOException ex) {
-            Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (JSONException ex) {
-            Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
+        String puerto = cbPuerto2.getSelectedItem().toString().trim();
+
+        if (!puerto.isEmpty()) {
+            Expreso exp = new Expreso();
+            exp.setVisible(true);
+            try {
+                exp.mostrarAlumnos(puerto);
+            } catch (IOException ex) {
+                Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (JSONException ex) {
+                Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+           
+            lbMensaje2.setText("Iniciado");
+            lbMensaje2.setForeground(Color.BLUE);
+        } else {
+            lbMensaje2.setText("Seleccione un puerto");
+            lbMensaje2.setForeground(Color.RED);
         }
+
+
     }//GEN-LAST:event_btIni2ActionPerformed
 
     private void btIni3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btIni3ActionPerformed
