@@ -88,10 +88,8 @@ public class Arduino implements SerialPortEventListener {
         
         JSONObject jObj = new JSONObject(respuesta);
         boolean error = jObj.getBoolean("err");
-        String mensaje = jObj.getString("mensaje").trim();
-        
-        System.out.println("Respuesta Obtenida: " + mensaje);
-
+        String mensaje = jObj.getString("mensaje").trim();        
+        System.out.println("Respuesta : " + mensaje);
       } catch (Exception e) {
         System.err.println(e.toString());
       }

@@ -12,7 +12,7 @@ public class ArduinoThread extends Thread {
   
   @Override
   public void run() {
-    Arduino ard = new Arduino(getPort(), getLugar());
+    Arduino ard = new Arduino(getPort(), getLugar());       
     ard.initialize();
   } 
   
