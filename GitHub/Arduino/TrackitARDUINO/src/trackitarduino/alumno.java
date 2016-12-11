@@ -37,9 +37,8 @@ public class alumno extends javax.swing.JPanel {
         lbEstado.setForeground(new java.awt.Color(30, 30, 30));
         lbEstado.setLabelFor(lbEstado);
         lbEstado.setText("Libre");
-        lbEstado.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         lbEstado.setOpaque(true);
-        add(lbEstado, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 20, 70, 20));
+        add(lbEstado, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 0, 70, 60));
 
         lbDispositivo.setForeground(new java.awt.Color(255, 255, 255));
         lbDispositivo.setLabelFor(lbDispositivo);
@@ -60,6 +59,7 @@ public class alumno extends javax.swing.JPanel {
     
     public void cambiarEstado(String estado){
         lbEstado.setText(estado);
+        lbEstado.setHorizontalTextPosition(4);
     }
     
     public void cambiarDispositivo(String dispostivo){

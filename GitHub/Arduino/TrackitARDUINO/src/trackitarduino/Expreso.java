@@ -242,8 +242,8 @@ public class Expreso extends javax.swing.JFrame implements SerialPortEventListen
             a1.cambiarDireccion(alu.getString("direccion"));
             a1.cambiarDispositivo(alu.getString("dispositivo"));
             a1.cambiarEstado("Libre");
-            a1.setSize(450, panel2Alto);
-            a1.setLocation(20, panel2y);
+            a1.setSize(439, panel2Alto);
+            a1.setLocation(30, panel2y);
             panel2y += panel2Alto + 4;
             jPanel2.add(a1, BorderLayout.CENTER);
             jPanel2.revalidate();
@@ -347,20 +347,16 @@ public class Expreso extends javax.swing.JFrame implements SerialPortEventListen
                                 if (((JLabel) cmpPanel[y]).getText().trim().equals(dispositivo)) {
                                     disCom = ((JLabel) cmpPanel[y]).getText().trim();
                                     estado = ((JLabel) cmpPanel[2]).getText();
-                                    if (estado.trim().equals("Libre")) {
+                                    if (estado.trim().equals("Libre") || estado.trim().equals("Bajó")) {
                                         ((JLabel) cmpPanel[2]).setText("Subió");
-                                        ((JLabel) cmpPanel[2]).setForeground(Color.GREEN);
+                                        ((JLabel) cmpPanel[2]).setForeground(Color.WHITE);
+                                        ((JLabel) cmpPanel[2]).setBackground(Color.GREEN);
                                     }
                                     if (estado.trim().equals("Subió")) {
                                         ((JLabel) cmpPanel[2]).setText("Bajó");
-                                        ((JLabel) cmpPanel[2]).setForeground(Color.RED);
+                                        ((JLabel) cmpPanel[2]).setForeground(Color.WHITE);
+                                        ((JLabel) cmpPanel[2]).setBackground(Color.RED);
                                     }
-
-                                    if (estado.trim().equals("Bajó")) {
-                                        ((JLabel) cmpPanel[2]).setText("Subió");
-                                        ((JLabel) cmpPanel[2]).setForeground(Color.GREEN);
-                                    }
-
                                 }
 
                             }
