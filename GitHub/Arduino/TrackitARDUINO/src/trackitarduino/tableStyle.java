@@ -13,12 +13,15 @@ public class tableStyle extends DefaultTableCellRenderer {
     if (column == 3) {
       if (value.equals("Libre")) {
         cell.setBackground(Color.WHITE);
+        cell.setForeground(Color.black);
       }
       if (value.equals("Subió")) {
         cell.setBackground(Color.GREEN);
+        cell.setForeground(Color.black);
       }
       if (value.equals("Bajó")) {
         cell.setBackground(Color.RED);
+        cell.setForeground(Color.black);
       }
     }
 

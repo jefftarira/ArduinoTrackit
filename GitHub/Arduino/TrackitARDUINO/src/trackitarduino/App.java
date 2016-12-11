@@ -130,8 +130,10 @@ public class App extends javax.swing.JFrame {
         String puerto = cbPuerto1.getSelectedItem().toString().trim();
 
         if (!puerto.isEmpty()) {
-            ArduinoThread ard = new ArduinoThread(puerto, "Casa");
-            ard.start();
+//            ArduinoThread ard = new ArduinoThread(puerto, "Casa");
+//            ard.start();
+            Arduino ard = new Arduino(puerto, "Casa");
+            ard.initialize();
             lbMensaje1.setText("Iniciado");
             lbMensaje1.setForeground(Color.BLUE);
         } else {
@@ -153,8 +155,7 @@ public class App extends javax.swing.JFrame {
             } catch (JSONException ex) {
                 Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
-           
+
             lbMensaje2.setText("Iniciado");
             lbMensaje2.setForeground(Color.BLUE);
         } else {
@@ -169,8 +170,10 @@ public class App extends javax.swing.JFrame {
         String puerto = cbPuerto3.getSelectedItem().toString().trim();
 
         if (!puerto.isEmpty()) {
-            ArduinoThread ard = new ArduinoThread(puerto, "Escuela");
-            ard.start();
+//            ArduinoThread ard = new ArduinoThread(puerto, "Escuela");
+//            ard.start();
+            Arduino ard = new Arduino(puerto, "Escuela");
+            ard.initialize();
             lbMensaje3.setText("Iniciado");
             lbMensaje3.setForeground(Color.BLUE);
         } else {
