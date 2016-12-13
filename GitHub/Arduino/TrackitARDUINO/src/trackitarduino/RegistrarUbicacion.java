@@ -28,7 +28,7 @@ public class RegistrarUbicacion {
     jsonD.put("lugar", lugar);
     jsonD.put("codigo", dispositivo);
     String userAgent = "Mozilla/5.0 (X11; Linux x86_64; rv:26.0) Gecko/20100101 Firefox/26.0";
-    String address = "http://localhost:8084/trackit/service_jsp/guardarUbicacion.jsp";
+    String address = "http://localhost:8084/control/service_jsp/guardarUbicacion.jsp";
     String charset = "UTF-8";
     
     String stringToSend = URLEncoder.encode(jsonD.toString(), charset);

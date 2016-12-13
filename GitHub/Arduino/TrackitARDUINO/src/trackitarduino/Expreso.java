@@ -199,11 +199,8 @@ public class Expreso extends javax.swing.JFrame implements SerialPortEventListen
         String respuesta = "";
         JSONObject jsonD = new JSONObject();
         jsonD.put("expreso", 60);
-//        alumno a1 = new alumno();
-//        jPanel2.add(a1);
-//        a1.setVisible(rootPaneCheckingEnabled);
         String userAgent = "Mozilla/5.0 (X11; Linux x86_64; rv:26.0) Gecko/20100101 Firefox/26.0";
-        String address = "http://localhost:8084/trackit/service_jsp/listaAlumnosExpreso.jsp";
+        String address = "http://localhost:8084/control/service_jsp/listaAlumnosExpreso.jsp";
         URL URL = new URL(address);
         URLConnection connection = URL.openConnection();
         connection.addRequestProperty("User-Agent", userAgent);
@@ -221,13 +218,6 @@ public class Expreso extends javax.swing.JFrame implements SerialPortEventListen
         }
         in.close();
 
-//        DefaultTableModel modelo = new DefaultTableModel();
-//        jTable1.setModel(modelo);
-//        modelo.addColumn("Codigo");
-//        modelo.addColumn("Nombre");
-//        modelo.addColumn("Direccion");
-//        modelo.addColumn("Estado");
-
         jPanel2.removeAll();
         int panel2y = 5;
         int panel2Alto = 57;
@@ -241,25 +231,14 @@ public class Expreso extends javax.swing.JFrame implements SerialPortEventListen
             a1.cambiarNombre(alu.getString("nombres") + " " + alu.getString("apellidos"));
             a1.cambiarDireccion(alu.getString("direccion"));
             a1.cambiarDispositivo(alu.getString("dispositivo"));
-            a1.cambiarEstado("Libre");
+            a1.cambiarEstado("   Libre");
             a1.setSize(439, panel2Alto);
             a1.setLocation(30, panel2y);
             panel2y += panel2Alto + 4;
             jPanel2.add(a1, BorderLayout.CENTER);
             jPanel2.revalidate();
             jPanel2.repaint();
-
-            Object[] obj = new Object[4];
-            obj[0] = alu.getString("dispositivo");
-            obj[1] = alu.getString("nombres") + " " + alu.getString("apellidos");
-            obj[2] = alu.getString("direccion");
-            obj[3] = "Libre";
-//            modelo.addRow(obj);
         }
-//        int[] anchos = {50, 150, 200, 50};
-//        for (int i = 0; i < jTable1.getColumnCount(); i++) {
-//            jTable1.getColumnModel().getColumn(i).setPreferredWidth(anchos[i]);
-//        }
 
         this.setPuerto(puerto);
         this.setLugar("Expreso");
@@ -328,7 +307,6 @@ public class Expreso extends javax.swing.JFrame implements SerialPortEventListen
                 StringTokenizer st = new StringTokenizer(inputLine.trim());
                 String dispositivo = "";
                 String disCom = "";
-                String estado = "";
                 while (st.hasMoreTokens()) {
                     dispositivo += st.nextToken().trim();
                 }
@@ -338,41 +316,19 @@ public class Expreso extends javax.swing.JFrame implements SerialPortEventListen
                 Component[] componentes = jPanel2.getComponents();
                 for (int x = 0; x < componentes.length; x++) {
                     if (componentes[x] instanceof JPanel) {
-                        System.out.println("Panel" + x);
-
                         Component[] cmpPanel = ((JPanel) componentes[x]).getComponents();
                         for (int y = 0; y < cmpPanel.length; y++) {
                             if (cmpPanel[y] instanceof JLabel) {
-                                System.out.println("Label " + ((JLabel) cmpPanel[y]).getText());
                                 if (((JLabel) cmpPanel[y]).getText().trim().equals(dispositivo)) {
                                     disCom = ((JLabel) cmpPanel[y]).getText().trim();
-                                    estado = ((JLabel) cmpPanel[2]).getText();
-                                    if (estado.trim().equals("Libre") || estado.trim().equals("Bajó")) {
-                                        ((JLabel) cmpPanel[2]).setText("Subió");
-                                        ((JLabel) cmpPanel[2]).setForeground(Color.WHITE);
-                                        ((JLabel) cmpPanel[2]).setBackground(Color.GREEN);
-                                    }
-                                    if (estado.trim().equals("Subió")) {
-                                        ((JLabel) cmpPanel[2]).setText("Bajó");
-                                        ((JLabel) cmpPanel[2]).setForeground(Color.WHITE);
-                                        ((JLabel) cmpPanel[2]).setBackground(Color.RED);
-                                    }
                                 }
 
                             }
                         }
 
-                    } else {
-                        System.out.println("Otro" + x);
                     }
                 }
 
-//                TableModel tableModel = jTable1.getModel();
-//                for (int i = 0; i < tableModel.getRowCount(); i++) {
-//                    if (dispositivo.equals(tableModel.getValueAt(i, 0).toString().trim())) {
-//                        disCom = tableModel.getValueAt(i, 0).toString().trim();
-//                    }
-//                }
                 if (!disCom.isEmpty()) {
                     RegistrarUbicacion ru = new RegistrarUbicacion();
                     String respuesta = ru.enviarUbicacion(getLugar(), disCom);
@@ -396,24 +352,32 @@ public class Expreso extends javax.swing.JFrame implements SerialPortEventListen
     }
 
     public void cambiarEstadoAlumno(String disCom) {
-//        System.out.println("Entro a cambiar estado");
-//        TableModel tableModel = jTable1.getModel();
-//        for (int i = 0; i < tableModel.getRowCount(); i++) {
-//            if (disCom.equals(tableModel.getValueAt(i, 0).toString().trim())) {
-//                String estado = tableModel.getValueAt(i, 3).toString().trim();
-//                if (estado.equals("Libre")) {
-//                    jTable1.setValueAt("Subió", i, 3);
-//                }
-//                if (estado.equals("Subió")) {
-//                    jTable1.setValueAt("Bajó", i, 3);
-//                }
-//                if (estado.equals("Bajó")) {
-//                    jTable1.setValueAt("Subió", i, 3);
-//                }
-//                jTable1.setDefaultRenderer(Object.class, new tableStyle());
-//
-//            }
-//        }
+        String estado = "";
+        Component[] componentes = jPanel2.getComponents();
+        for (int x = 0; x < componentes.length; x++) {
+            if (componentes[x] instanceof JPanel) {
+                Component[] cmpPanel = ((JPanel) componentes[x]).getComponents();
+                for (int y = 0; y < cmpPanel.length; y++) {
+                    if (cmpPanel[y] instanceof JLabel) {
+                        if (((JLabel) cmpPanel[y]).getText().trim().equals(disCom)) {
+                            estado = ((JLabel) cmpPanel[2]).getText();
+                            if (estado.trim().equals("Libre") || estado.trim().equals("Bajó")) {
+                                ((JLabel) cmpPanel[2]).setText("   Subió");
+                                ((JLabel) cmpPanel[2]).setForeground(Color.WHITE);
+                                ((JLabel) cmpPanel[2]).setBackground(new Color(0, 166, 90));
+                            }
+                            if (estado.trim().equals("Subió")) {
+                                ((JLabel) cmpPanel[2]).setText("   Bajó");
+                                ((JLabel) cmpPanel[2]).setForeground(Color.WHITE);
+                                ((JLabel) cmpPanel[2]).setBackground(new Color(221, 75, 57));
+                            }
+                        }
+
+                    }
+                }
+
+            }
+        }
     }
 
     public String getPuerto() {

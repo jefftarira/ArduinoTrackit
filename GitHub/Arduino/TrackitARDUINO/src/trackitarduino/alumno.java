@@ -33,8 +33,8 @@ public class alumno extends javax.swing.JPanel {
         add(lbNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 5, 337, -1));
 
         lbEstado.setBackground(new java.awt.Color(255, 255, 255));
-        lbEstado.setFont(new java.awt.Font("Segoe UI", 3, 14)); // NOI18N
-        lbEstado.setForeground(new java.awt.Color(30, 30, 30));
+        lbEstado.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        lbEstado.setForeground(new java.awt.Color(63, 63, 63));
         lbEstado.setLabelFor(lbEstado);
         lbEstado.setText("Libre");
         lbEstado.setOpaque(true);
